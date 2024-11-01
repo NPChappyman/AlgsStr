@@ -74,7 +74,7 @@ public class Main {
         Stack.IntoPost o = new Stack.IntoPost("1+7*8*(3+5*9)");
         Stack.ParsePost o2 = new ParsePost(o.doTrans());
         System.out.println(o2.doParse());
-        System.out.println("BMO");
+
     }
 
     public static String getString() throws IOException
