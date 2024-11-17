@@ -51,5 +51,20 @@ public class array
             System.out.print(a[j] + " "); // Вывод
         System.out.println("");
     }
+    public static int sfind(int[] ar, int key,int lowercase,int upcase)
+    {
+        int mid = (upcase+lowercase)/2;
+        if (ar[mid]==key) return mid;
+        else {
+            if (upcase<lowercase) return -1;
+            if (ar[mid]>key) return sfind(ar,key,lowercase,mid-1);
+            else  return sfind(ar,key,mid+1,upcase);
+        }
+
+    }
+    public static int sortfind(int[] ar,int y)
+    {
+        return sfind(ar,y,0,ar.length-1);
+    }
 //-----------------------------------------------------------
 }

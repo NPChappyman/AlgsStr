@@ -34,6 +34,72 @@ public class sort {
         }
     }
 
+    //-----------------------------------------------------------
+
+
+    public static void recMergeSort(long[] theArray,long[] workSpace, int lowerBound,
+                              int upperBound)
+    {
+        if(lowerBound == upperBound) // Если только один элемент,
+            return; // сортировка не требуется.
+        else
+        { // Поиск середины
+            int mid = (lowerBound+upperBound) / 2;
+            // Сортировка нижней половины
+            recMergeSort(theArray,workSpace, lowerBound, mid);
+            // Сортировка верхней половины
+            recMergeSort(theArray,workSpace, mid+1, upperBound);
+            // Слияние
+            merge(theArray,workSpace, lowerBound, mid+1, upperBound);
+        }
+    }
+
+    public static void merge(long[] theArray,long[] workSpace, int lowPtr,
+                       int highPtr, int upperBound)
+    {
+        int j = 0; // Индекс в рабочей области
+        int lowerBound = lowPtr;
+        int mid = highPtr-1;
+        int n = upperBound-lowerBound+1; // Количество элементов
+        while(lowPtr <= mid && highPtr <= upperBound)
+            if( theArray[lowPtr] < theArray[highPtr] )
+                workSpace[j++] = theArray[lowPtr++];
+            else
+                workSpace[j++] = theArray[highPtr++];
+        while(lowPtr <= mid)
+            workSpace[j++] = theArray[lowPtr++];
+        while(highPtr <= upperBound)
+            workSpace[j++] = theArray[highPtr++];
+        for(j=0; j<n; j++)
+            theArray[lowerBound+j] = workSpace[j];
+    }
+//-----------------------------------------------------------
+
+    public static void merge1( int[] arrayA, int sizeA,
+                              int[] arrayB, int sizeB,
+                              int[] arrayC )
+    {
+        int aDex=0, bDex=0, cDex=0;
+        while(aDex < sizeA && bDex < sizeB) // Ни один из массивов не пуст
+            if( arrayA[aDex] < arrayB[bDex] )
+                arrayC[cDex++] = arrayA[aDex++];
+            else
+                arrayC[cDex++] = arrayB[bDex++];
+        while(aDex < sizeA) // Массив arrayB пуст,
+            arrayC[cDex++] = arrayA[aDex++]; // в arrayA остались элементы
+        while(bDex < sizeB) // Массив arrayA пуст,
+            arrayC[cDex++] = arrayB[bDex++]; // в arrayB остались элементы
+    }
+    //-----------------------------------------------------------
+    // Вывод содержимого массива
+    public static void display(int[] theArray, int size)
+    {
+        for(int j=0; j<size; j++)
+            System.out.print(theArray[j] + " ");
+        System.out.println("");
+    }
+//-----------------------------------------------------------
+
 
     public static  void selectionSort(int[] a)
     {
