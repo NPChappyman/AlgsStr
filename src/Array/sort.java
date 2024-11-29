@@ -120,4 +120,75 @@ public class sort {
         a[one] = a[two];
         a[two] = temp;
     }
+    //-------------------------------------
+    public static void shellSort(int[] theArray,int nElems) {
+        int inner, outer;
+        int temp;
+        int h = 1; // Вычисление исходного значения h
+        while (h <= nElems / 3)
+            h = h * 3 + 1; // (1, 4, 13, 40, 121, ...)
+        while (h > 0) // Последовательное уменьшение h до 1
+        {
+            // h-сортировка файла
+            for (outer = h; outer < nElems; outer++) {
+                temp = theArray[outer];
+                inner = outer;
+                // Первый подмассив (0, 4, 8)
+                while (inner > h - 1 && theArray[inner - h] >= temp) {
+                    theArray[inner] = theArray[inner - h];
+                    inner -= h;
+                }
+                theArray[inner] = temp;
+            }
+            h = (h - 1) / 3; // Уменьшение h
+        }
+    }
+    //--------------------------------------------------------------
+    public static void recQuickSort(int[] theArray,int left, int right)
+    {
+        if(right-left <= 0) // Если размер <= 1,
+            return; // массив отсортирован
+        else // Для размера 2 и более
+        {
+            long pivot = theArray[right]; // Крайний правый элемент
+            // Разбиение диапазона
+            int partition = partitionIt(theArray,left, right, pivot);
+            recQuickSort(theArray,left, partition-1); // Сортировка левой части
+
+            recQuickSort(theArray,partition+1, right); // Сортировка правой части
+
+        }
+    }
+//--------------------------------------------------------------
+
+    public static int partitionIt(int[] theArray, int left, int right, long pivot)
+    {
+        int leftPtr = left - 1; // Справа от первого элемента
+        int rightPtr = right ; // Слева от опорного элемента
+        while(true)
+        {
+            while(leftPtr < right && // Поиск большего элемента
+                    theArray[++leftPtr] < pivot)
+                ; // (пустое тело цикла)
+
+            while(rightPtr > left && // Поиск меньшего элемента
+                    theArray[--rightPtr] > pivot)
+                ; // (пустое тело цикла)
+            if(leftPtr >= rightPtr) // Если указатели сошлись,
+                break; // разбиение закончено
+            else // В противном случае
+                swap(theArray,leftPtr, rightPtr); // поменять элементы местами
+        }
+        swap(theArray,leftPtr, right);
+
+        return leftPtr; // Позиция разбиения
+    }
+    public static void swap(int[] theArray,int dex1, int dex2) // Перестановка двух элементов
+    {
+        int temp;
+        temp = theArray[dex1]; // A копируется в temp
+        theArray[dex1] = theArray[dex2]; // B копируется в A
+        theArray[dex2] = temp; // temp копируется в B
+    }
+//--------------------------------------------------------------
 }
