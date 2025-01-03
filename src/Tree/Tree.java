@@ -8,6 +8,10 @@ public class Tree
     {
         return root;
     }
+    public void setroot(Node w)
+    {
+        root= w;
+    }
     public Node find(int key) // Поиск узла с заданным ключом
     { // (предполагается, что дерево не пустое)
         Node current = root; // Начать с корневого узла

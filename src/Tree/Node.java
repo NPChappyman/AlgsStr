@@ -2,8 +2,18 @@ package Tree;
 
 public class Node {
     int iData; // Данные, используемые в качестве ключа
-    Node leftChild; // Левый потомок узла
-    Node rightChild; // Правый потомок узла
+    char key;
+    public Node(char k, int d)
+    {
+        key = k ;
+        iData = d;
+    }
+    public Node()
+    {
+
+    }
+    public Node leftChild; // Левый потомок узла
+    public Node rightChild; // Правый потомок узла
     public void displayNode()
     {
         System.out.println(iData);

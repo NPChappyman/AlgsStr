@@ -9,22 +9,24 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        Tree w1 = new Tree();
-        w1.insert(81);
-        w1.insert(72);
-        w1.insert(86);
-        w1.insert(82);
-        w1.insert(83);
-        w1.insert(89);
-        w1.insert(87);
-        w1.insert(88);
-        w1.displayTree();
-        w1.preOrder(w1.getroot());
-        System.out.println();
-        w1.inOrder(w1.getroot());
-        System.out.println();
-        w1.postOrder(w1.getroot());
+//        Tree w1 = new Tree();
+//        w1.insert(81);
+//        w1.insert(72);
+//        w1.insert(86);
+//        w1.insert(82);
+//        w1.insert(83);
+//        w1.insert(89);
+//        w1.insert(87);
+//        w1.insert(88);
+//        w1.displayTree();
+//        w1.delete(81);
+//        w1.displayTree();
+        String t   = "sussie sus simdi dedim";
 
+        Haffman tH = new Haffman();
+        String res =tH.enCode("sussie sus simdi dedim");
+        System.out.println(res);
+        System.out.println(tH.decode(res));
     }
 
     //--------------------------------------------------------------
