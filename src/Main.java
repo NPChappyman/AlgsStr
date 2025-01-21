@@ -27,6 +27,9 @@ public class Main {
         String res =tH.enCode("sussie sus simdi dedim");
         System.out.println(res);
         System.out.println(tH.decode(res));
+        int[] a  = new int[] {12,23,7,2,1,10,1};
+        int[] res1 = new int[10];
+        bag(a,res1,0,0,14);
     }
 
     //--------------------------------------------------------------
@@ -81,7 +84,7 @@ public class Main {
             System.out.println("----------------");
             return;
         }
-        else if (dif<0 || i>=a.length || j>=res.length ) {res[j-1]=0;res[j]=0;return;}
+        else if (dif<0 || i>=a.length || j>=res.length ) {res[j]=0;return;}
         else {
 
         for (int i1=i;i1<a.length;i1++)

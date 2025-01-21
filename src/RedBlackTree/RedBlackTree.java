@@ -7,15 +7,15 @@ import java.util.Stack;
 enum Color{
     RED,BLACK
 }
-class Node{
-    int key;
-    int value;
+class Node<T extends Comparable<T>,K>{
+    T key;
+    K value;
     Node left=null;
     Node right = null ;
     Color color = Color.BLACK;
     Node parent = null;
     static Node nil= new Node();
-    public Node(int key , int value)
+    public Node(T key , K value)
     {
         this.key = key;
         this.value = value;
@@ -31,32 +31,54 @@ class Node{
     }
 }
 
-public class RedBlackTree
+public class RedBlackTree<T extends Comparable<T>,K>
 {
-
-    public Node root = Node.nil;
-    void insert(int key, int value)
+    public Node<T,K> root = Node.nil;
+    public K get(T key)
     {
-        Node currentNode = this.root;
-        Node parrent = Node.nil;
+        if (root == Node.nil) return null;
+        else
+        {
+            Node<T,K> currentNode = this.root;
+
+            while (currentNode != Node.nil) {
+                int cmp = key.compareTo(currentNode.key); // Сравниваем ключи
+
+                if (cmp < 0) {
+                    currentNode = currentNode.left; // Идем влево
+                } else if (cmp > 0) {
+                    currentNode = currentNode.right; // Идем вправо
+                } else {
+                    return currentNode.value; // Ключ найден, возвращаем значение
+                }
+            }
+            return null; // Ключ не найден, возвращаем null
+        }
+    }
+
+    void insert(T key, K value)
+    {
+        Node<T,K> currentNode = this.root;
+        Node<T,K> parrent = Node.nil;
         while (nodeExists(currentNode)){
             parrent = currentNode;
-            if (key<currentNode.key) currentNode = currentNode.left;
+            int cmp = key.compareTo(currentNode.key);
+            if (cmp<0) currentNode = currentNode.left;
             else currentNode = currentNode.right;
         }
         Node newNode = new Node();
         createNode(newNode,key,value);
         newNode.parent = parrent;
         if (parrent == Node.nil) root = newNode;
-        else if (key< parrent.key) parrent.left = newNode;
+        else if (key.compareTo( parrent.key) < 0) parrent.left = newNode;
         else parrent.right = newNode;
         balanceTree(newNode);
 
     }
-    void balanceTree( Node node)
+    void balanceTree( Node<T,K> node)
     {
 
-        Node uncle ;
+        Node<T,K> uncle ;
             while (node.parent.color==Color.RED)
             {
                 if (node.parent == node.parent.parent.left)
@@ -106,8 +128,8 @@ public class RedBlackTree
 
     }
     // this function performs left rotation
-    Node rotateLeft(Node node) {
-        Node x = node.right;
+    Node<T,K> rotateLeft(Node<T,K> node) {
+        Node<T,K> x = node.right;
         node.right = x.left; // Изменение ссылки на левое поддерево x
         if (x.left != Node.nil) {
             x.left.parent = node; // Обновляем родителя
@@ -125,8 +147,8 @@ public class RedBlackTree
         return x;
     }
 
-    Node rotateRight(Node node) {
-        Node x = node.left;
+    Node<T,K> rotateRight(Node<T,K> node) {
+        Node<T,K> x = node.left;
         node.left = x.right; // Изменение ссылки на правое поддерево x
         if (x.right != Node.nil) {
             x.right.parent = node; // Обновляем родителя
@@ -143,11 +165,11 @@ public class RedBlackTree
         node.parent = x; // Обновляем родителя
         return x;
     }
-    boolean nodeExists(Node node)
+    boolean nodeExists(Node<T,K> node)
     {
         return node!= Node.nil;
     }
-    void createNode(Node node , int key, int value)
+    void createNode(Node<T,K> node , T key, K value)
     {
         node.parent = Node.nil;
         node.left=Node.nil;
@@ -201,7 +223,7 @@ public class RedBlackTree
                 "......................................................");
     }
 
-    private void preOrderHelper(Node node) {
+    private void preOrderHelper(Node<T,K> node) {
         if (node != Node.nil) {
             System.out.print(node.key + " ");
             preOrderHelper(node.left);
@@ -213,7 +235,7 @@ public class RedBlackTree
     }
 
     // Inorder traversal helper function
-    private void inOrderHelper(Node node) {
+    private void inOrderHelper(Node<T,K> node) {
         if (node != Node.nil) {
             inOrderHelper(node.left);
             System.out.print(node.key + " ");
@@ -227,7 +249,7 @@ public class RedBlackTree
     }
 
     // Postorder traversal helper function
-    private void postOrderHelper(Node node) {
+    private void postOrderHelper(Node<T,K> node) {
         if (node != Node.nil) {
             postOrderHelper(node.left);
             postOrderHelper(node.right);
@@ -243,7 +265,7 @@ public class RedBlackTree
 
     // Main function to test the Red-Black Tree implementation
     public static void main(String[] args) {
-            RedBlackTree tr1= new RedBlackTree();
+            RedBlackTree<Integer,Integer> tr1= new RedBlackTree<Integer,Integer>();
         tr1.insert(55,1);
 
 
@@ -254,7 +276,7 @@ public class RedBlackTree
         tr1.insert(183,1);
         tr1.insert(323,1);
         tr1.insert(325,1);
-        tr1.insert(326,1);
+        tr1.insert(326,11);
         tr1.insert(328,1);
         tr1.insert(329,1);
         tr1.insert(330,1);
@@ -262,6 +284,7 @@ public class RedBlackTree
         tr1.insert(332,1);
         tr1.insert(333,1);tr1.insert(334,1);tr1.insert(336,1);tr1.insert(337,1);
         tr1.insert(338,1);
+        System.out.println(tr1.get(326));
 
 
     tr1.displayTree();
