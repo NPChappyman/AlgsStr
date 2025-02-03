@@ -1,9 +1,9 @@
 package Tree;
 
-public class Node {
-    int iData; // Данные, используемые в качестве ключа
-    char key;
-    public Node(char k, int d)
+public class Node<T extends Comparable<T> , K> {
+    T iData; // Данные, используемые в качестве ключа
+    K key;
+    public Node(T d,K k)
     {
         key = k ;
         iData = d;
@@ -12,8 +12,8 @@ public class Node {
     {
 
     }
-    public Node leftChild; // Левый потомок узла
-    public Node rightChild; // Правый потомок узла
+    public Node<T,K> leftChild; // Левый потомок узла
+    public Node<T,K> rightChild; // Правый потомок узла
     public void displayNode()
     {
         System.out.println(iData);

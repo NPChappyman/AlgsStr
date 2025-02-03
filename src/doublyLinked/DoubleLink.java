@@ -1,8 +1,8 @@
 package doublyLinked;
 
-public class DoubleLink {
-    public Link first; // Ссылка на первый элемент списка
-    public Link last; // Ссылка на последний элемент списка
+public class DoubleLink<T> {
+    public Link<T> first; // Ссылка на первый элемент списка
+    public Link<T> last; // Ссылка на последний элемент списка
     // -------------------------------------------------------------
     public DoubleLink() // Конструктор
     {
@@ -12,19 +12,19 @@ public class DoubleLink {
     // -------------------------------------------------------------
     public DoubleLinkedListIterator getIterator()
     {
-        DoubleLinkedListIterator po = new DoubleLinkedListIterator(this);
+        DoubleLinkedListIterator<T> po = new DoubleLinkedListIterator<T>(this);
         return  po;
     }
 
     public boolean isEmpty() // true, если список пуст
     { return first==null; }
     // -------------------------------------------------------------
-    public Link getFirst()
+    public Link<T> getFirst()
     {
         return first;
     }
 
-    public void setFirst(Link p)
+    public void setFirst(Link<T> p)
     {
         if (isEmpty()) {
             first = p;
@@ -36,9 +36,9 @@ public class DoubleLink {
         first = p;}
     }
 
-    public void insertFirst(long dd) // Вставка элемента в начало списка
+    public void insertFirst(T dd) // Вставка элемента в начало списка
     {
-        Link newLink = new Link(dd); // Создание нового элемента
+        Link<T> newLink = new Link<T>(dd); // Создание нового элемента
         if( isEmpty() ) // Если список не содержит элементов,
             last = newLink; // newLink <-- last
         else
@@ -47,9 +47,9 @@ public class DoubleLink {
         first = newLink; // first --> newLink
     }
     // -------------------------------------------------------------
-    public void insertLast(long dd) // элемент в конец списка
+    public void insertLast(T dd) // элемент в конец списка
     {
-        Link newLink = new Link(dd); // Создание нового элемента
+        Link<T> newLink = new Link<T>(dd); // Создание нового элемента
         if( isEmpty() ) // Если список не содержит элементов,
             first = newLink; // first --> newLink
         else
@@ -60,9 +60,9 @@ public class DoubleLink {
         last = newLink; // newLink <-- last
     }
     // -------------------------------------------------------------
-    public Link deleteFirst() // Удаление первого элемента
+    public Link<T> deleteFirst() // Удаление первого элемента
     { // (предполагается, что список не пуст)
-        Link temp = first;
+        Link<T> temp = first;
         if(first.next == null) // Если только один элемент
             last = null; // null <-- last
         else
@@ -71,9 +71,9 @@ public class DoubleLink {
         return temp;
     }
     // -------------------------------------------------------------
-    public Link deleteLast() // Удаление последнего элемента
+    public Link<T> deleteLast() // Удаление последнего элемента
     { // (предполагается, что список не пуст)
-        Link temp = last;
+        Link<T> temp = last;
         if(first.next == null) // Если только один элемент
             first = null; // first --> null
         else
@@ -83,16 +83,16 @@ public class DoubleLink {
     }
     // -------------------------------------------------------------
     // Вставка dd в позицию после key
-    public boolean insertAfter(long key, long dd)
+    public boolean insertAfter(T key, T dd)
     { // (предполагается, что список не пуст)
-        Link current = first; // От начала списка
+        Link<T> current = first; // От начала списка
         while(current.dData != key) // Пока не будет найдено совпадение
         {
             current = current.next; // Переход к следующему элементу
             if(current == null)
                 return false; // Ключ не найден
         }
-        Link newLink = new Link(dd); // Создание нового элемента
+        Link<T> newLink = new Link<T>(dd); // Создание нового элемента
         if(current==last) // Для последнего элемента списка
         {
             newLink.next = null; // newLink --> null
@@ -109,9 +109,9 @@ public class DoubleLink {
         return true; // Ключ найден, вставка выполнена
     }
     // -------------------------------------------------------------
-    public Link deleteKey(long key) // Удаление элемента с заданным ключом
+    public Link<T> deleteKey(T key) // Удаление элемента с заданным ключом
     { // (предполагается, что список не пуст)
-        Link current = first; // От начала списка
+        Link<T> current = first; // От начала списка
         while(current.dData != key) // Пока не будет найдено совпадение
         {
             current = current.next; // Переход к следующему элементу
@@ -134,7 +134,7 @@ public class DoubleLink {
     public void displayForward()
     {
         System.out.print("List (first-->last): ");
-        Link current = first; // От начала списка
+        Link<T> current = first; // От начала списка
         while(current != null) // Перемещение до конца списка
         {
             current.displayLink(); // Вывод данных
@@ -146,7 +146,7 @@ public class DoubleLink {
     public void displayBackward()
     {
         System.out.print("List (last-->first): ");
-        Link current = last; // От начала списка
+        Link<T> current = last; // От начала списка
         while(current != null) // Перемещение до конца списка
         {
             current.displayLink(); // Вывод данных

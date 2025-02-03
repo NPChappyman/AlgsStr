@@ -1,22 +1,23 @@
 package Queue;
 
-public class queue {
+public class queue<T> {
     private int maxSize;
-    private long[] queArray;
+    private T[] queArray;
     private int front;
     private int rear;
     private int nItems;
     //--------------------------------------------------------------
-    public queue(int s) // Конструктор
+    public  queue(int s) // Конструктор
     {
         maxSize = s;
-        queArray = new long[maxSize];
+        queArray =(T[]) new Object[maxSize];
+
         front = 0;
         rear = -1;
         nItems = 0;
     }
 //--------------------------------------------------------------
-public void insert(long j) // Вставка элемента в конец очереди
+public void insert(T j) // Вставка элемента в конец очереди
 {
     if(rear == maxSize-1) // Циклический перенос
         rear = -1;
@@ -24,16 +25,16 @@ public void insert(long j) // Вставка элемента в конец оч
     nItems++; // Увеличение количества элементов
 }
     //--------------------------------------------------------------
-    public long remove() // Извлечение элемента в начале очереди
+    public T remove() // Извлечение элемента в начале очереди
     {
-        long temp = queArray[front++]; // Выборка и увеличение front
+        T temp = queArray[front++]; // Выборка и увеличение front
         if(front == maxSize) // Циклический перенос
             front = 0;
         nItems--; // Уменьшение количества элементов
         return temp;
     }
     //--------------------------------------------------------------
-    public long peekFront() // Чтение элемента в начале очереди
+    public T peekFront() // Чтение элемента в начале очереди
     {
         return queArray[front];
     }
@@ -53,4 +54,5 @@ public void insert(long j) // Вставка элемента в конец оч
         return nItems;
     }
 //--------------------------------------------------------------
+
 }

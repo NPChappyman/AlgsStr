@@ -4,7 +4,7 @@ import java.util.*;
 import java.util.Comparator;
 class HaffmanTree implements Comparable<HaffmanTree>
 {
-    private Node root; // Единственное поле данных
+    private Node<Integer,Character> root; // Единственное поле данных
     public Node getroot()
     {
         return root;
@@ -24,7 +24,7 @@ class HaffmanTree implements Comparable<HaffmanTree>
     public static HaffmanTree sliv(HaffmanTree a1 , HaffmanTree a2)
     {
         HaffmanTree res = new HaffmanTree();
-        Node resNode = new Node();
+        Node<Integer,Character> resNode = new Node();
         resNode.iData = a1.root.iData+a2.root.iData;
         res.setroot(resNode);
         res.root.leftChild = a1.root;

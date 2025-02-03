@@ -1,23 +1,23 @@
 package Tree;
 import java.io.*;
 import java.util.*;
-public class Tree
+public class Tree<T extends Comparable<T>, K>
 {
-    private Node root; // Единственное поле данных
-    public Node getroot()
+    private Node<T,K> root; // Единственное поле данных
+    public Node<T,K> getroot()
     {
         return root;
     }
-    public void setroot(Node w)
+    public void setroot(Node<T,K> w)
     {
         root= w;
     }
-    public Node find(int key) // Поиск узла с заданным ключом
+    public Node<T,K> find(T key) // Поиск узла с заданным ключом
     { // (предполагается, что дерево не пустое)
-        Node current = root; // Начать с корневого узла
+        Node<T,K> current = root; // Начать с корневого узла
         while(current.iData != key) // Пока не найдено совпадение
         {
-            if(key < current.iData) // Двигаться налево?
+            if(key.compareTo( current.iData)<0) // Двигаться налево?
                 current = current.leftChild;
             else
                 current = current.rightChild; // Или направо?
@@ -26,21 +26,21 @@ public class Tree
         }
         return current; // Элемент найден
     }
-    public void insert(int id)
+    public void insert(T id)
     {
-        Node newNode = new Node(); // Создание нового узла
+        Node<T,K> newNode = new Node(); // Создание нового узла
         newNode.iData = id; // Вставка данных
 
         if(root==null) // Корневой узел не существует
             root = newNode;
         else // Корневой узел занят
         {
-            Node current = root; // Начать с корневого узла
-            Node parent;
+            Node<T,K> current = root; // Начать с корневого узла
+            Node<T,K> parent;
             while(true) // (Внутренний выход из цикла)
             {
                 parent = current;
-                if(id < current.iData) // Двигаться налево?
+                if(id.compareTo( current.iData)<0) // Двигаться налево?
                 {
                     current = current.leftChild;
                     if(current == null) // Если достигнут конец цепочки
@@ -62,15 +62,15 @@ public class Tree
         }
     }
     // -------------------------------------------------------------
-    public boolean delete(int key)
+    public boolean delete(T key)
     {
-        Node current = root;
-        Node parent = root;
+        Node<T,K> current = root;
+        Node<T,K> parent = root;
         boolean isLeftChild = true;
-        while(current.iData != key) // Поиск узла
+        while(current.iData.compareTo( key) != 0) // Поиск узла
         {
             parent = current;
-            if(key < current.iData) // Двигаться налево?
+            if(key.compareTo( current.iData)<0) // Двигаться налево?
             {
                 isLeftChild = true;
                 current = current.leftChild;
@@ -114,7 +114,7 @@ public class Tree
         else // Два потомка, узел заменяется преемником
         {
             // Поиск преемника для удаляемого узла (current)
-            Node successor = getSuccessor(current);
+            Node<T,K> successor = getSuccessor(current);
             // Родитель current связывается с посредником
             if(current == root)
                 root = successor;
@@ -132,11 +132,11 @@ public class Tree
     // Метод возвращает узел со следующим значением после delNode.
     // Для этого он сначала переходит к правому потомку, а затем
     // отслеживает цепочку левых потомков этого узла.
-    private Node getSuccessor(Node delNode)
+    private Node<T,K> getSuccessor(Node<T,K> delNode)
     {
-        Node successorParent = delNode;
-        Node successor = delNode;
-        Node current = delNode.rightChild; // Переход к правому потомку
+        Node<T,K> successorParent = delNode;
+        Node<T,K> successor = delNode;
+        Node<T,K> current = delNode.rightChild; // Переход к правому потомку
         while(current != null) // Пока остаются левые потомки
         {
             successorParent = successor;
@@ -169,7 +169,7 @@ public class Tree
     }
 
 
-    public void preOrder(Node localRoot)
+    public void preOrder(Node<T,K> localRoot)
     {
         if(localRoot != null)
         {
@@ -178,7 +178,7 @@ public class Tree
             preOrder(localRoot.rightChild);
         }
     }
-    public void postOrder(Node localRoot)
+    public void postOrder(Node<T,K> localRoot)
     {
         if(localRoot != null)
         {
@@ -188,7 +188,7 @@ public class Tree
         }
     }
 
-    public void inOrder(Node localRoot)
+    public void inOrder(Node<T,K> localRoot)
     {
         if(localRoot != null)
         {
@@ -214,7 +214,7 @@ public class Tree
                 System.out.print(' ');
             while(globalStack.isEmpty()==false)
             {
-                Node temp = (Node)globalStack.pop();
+                Node<T,K> temp = (Node<T,K>)globalStack.pop();
                 if(temp != null)
                 {
                     System.out.print(temp.iData);
@@ -244,10 +244,10 @@ public class Tree
 // -------------------------------------------------------------
 
 
-    public Node minimum() // Возвращает узел с минимальным ключом
+    public Node<T,K> minimum() // Возвращает узел с минимальным ключом
     {
-        Node current;
-        Node last = null;
+        Node<T,K> current;
+        Node<T,K> last = null;
         current = root; // Обход начинается с корневого узла
         while(current != null) // и продолжается до низа
         {
@@ -257,4 +257,14 @@ public class Tree
         return last;
     }
     // Другие методы
+
+    public static void main(String[] args)
+    {
+        Tree<Integer,Integer> ww = new Tree<Integer,Integer>();
+        ww.insert(23);
+        ww.insert(1312132);
+        ww.insert(1231331);
+        ww.insert(23121323);
+        ww.displayTree();
+    }
 } // Конец класса Tree

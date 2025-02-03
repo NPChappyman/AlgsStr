@@ -1,16 +1,16 @@
 package Array;
 
 public class sort {
-    public static void bubblesort(int[] a)
+    public static <T extends Comparable<T>> void bubblesort(T[] a)
     {
 
         for (int i = 0;i<a.length;i++ )
         {
             for (int j = 0; j<a.length-i-1;j++)
             {
-                if(a[j]>a[j+1])
+                if(a[j].compareTo(a[j+1])>0)
                 {
-                    int temp = a[j];
+                    T temp = a[j];
                     a[j] = a[j+1];
                     a[j+1] = temp;
                 }
@@ -144,13 +144,13 @@ public class sort {
         }
     }
     //--------------------------------------------------------------
-    public static void recQuickSort(int[] theArray,int left, int right)
+    public static <T extends Comparable<T> > void recQuickSort(T[] theArray,int left, int right)
     {
         if(right-left <= 0) // Если размер <= 1,
             return; // массив отсортирован
         else // Для размера 2 и более
         {
-            long pivot = theArray[right]; // Крайний правый элемент
+            T pivot = theArray[right]; // Крайний правый элемент
             // Разбиение диапазона
             int partition = partitionIt(theArray,left, right, pivot);
             recQuickSort(theArray,left, partition-1); // Сортировка левой части
@@ -161,18 +161,18 @@ public class sort {
     }
 //--------------------------------------------------------------
 
-    public static int partitionIt(int[] theArray, int left, int right, long pivot)
+    public static <T extends Comparable<T>> int partitionIt(T[] theArray, int left, int right, T pivot)
     {
         int leftPtr = left - 1; // Справа от первого элемента
         int rightPtr = right ; // Слева от опорного элемента
         while(true)
         {
             while(leftPtr < right && // Поиск большего элемента
-                    theArray[++leftPtr] < pivot)
+                    theArray[++leftPtr].compareTo( pivot) <0)
                 ; // (пустое тело цикла)
 
             while(rightPtr > left && // Поиск меньшего элемента
-                    theArray[--rightPtr] > pivot)
+                    theArray[--rightPtr].compareTo( pivot)>0)
                 ; // (пустое тело цикла)
             if(leftPtr >= rightPtr) // Если указатели сошлись,
                 break; // разбиение закончено
@@ -183,9 +183,9 @@ public class sort {
 
         return leftPtr; // Позиция разбиения
     }
-    public static void swap(int[] theArray,int dex1, int dex2) // Перестановка двух элементов
+    public static <T> void swap(T[] theArray,int dex1, int dex2) // Перестановка двух элементов
     {
-        int temp;
+        T temp;
         temp = theArray[dex1]; // A копируется в temp
         theArray[dex1] = theArray[dex2]; // B копируется в A
         theArray[dex2] = temp; // temp копируется в B

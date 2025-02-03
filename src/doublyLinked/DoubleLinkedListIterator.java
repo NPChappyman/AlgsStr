@@ -1,11 +1,11 @@
 package doublyLinked;
 
-public class DoubleLinkedListIterator {
+public class DoubleLinkedListIterator<T> {
 
-    private Link current;
-    private DoubleLink ourList;
+    private Link<T> current;
+    private DoubleLink<T> ourList;
 
-    public DoubleLinkedListIterator(DoubleLink p)
+    public DoubleLinkedListIterator(DoubleLink<T> p)
     {
         ourList=p;
         reset();
@@ -31,12 +31,12 @@ public class DoubleLinkedListIterator {
         current = current.previous;
     }
     //--------------------------------------------------------------
-    public Link getCurrent() // Получение текущего элемента
+    public Link<T> getCurrent() // Получение текущего элемента
     { return current; }
 
-    public void insertAfter(long dd) // Вставка после
+    public void insertAfter(T dd) // Вставка после
     { // текущего элемента
-        Link newLink = new Link(dd);
+        Link<T> newLink = new Link<T>(dd);
         if( ourList.isEmpty() ) // Пустой список
         {
             ourList.setFirst(newLink);
@@ -61,9 +61,9 @@ public class DoubleLinkedListIterator {
         }
     }
     //--------------------------------------------------------------
-    public void insertBefore(long dd) // Вставка перед
+    public void insertBefore(T dd) // Вставка перед
     { // текущим элементом
-        Link newLink = new Link(dd);
+        Link<T> newLink = new Link<T>(dd);
         if(current.previous == null) // В начале списка
         { // (или пустой список)
             newLink.next = ourList.getFirst();
@@ -80,9 +80,9 @@ public class DoubleLinkedListIterator {
         }
     }
     //--------------------------------------------------------------
-    public long deleteCurrent() // Удаление текущего элемента
+    public T deleteCurrent() // Удаление текущего элемента
     {
-        long value = current.dData;
+        T value = current.dData;
         if(current.previous == null) // Если в начале списка
         {
             if (current.next == null)

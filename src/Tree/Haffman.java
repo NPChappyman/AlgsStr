@@ -42,7 +42,7 @@ public class Haffman {
                 obhod(current.leftChild,res+"0");}
             if (current.rightChild!=null){
                 obhod(current.rightChild,res+"1");}
-            if (current.key!='\u0000') table[((int) current.key)]=res;
+            if ((char) current.key!='\u0000') table[((int) current.key)]=res;
         }
     }
     public HaffmanTree buildhaffmanTree(String s)
