@@ -262,7 +262,7 @@ public class Tree<T extends Comparable<T>, K>
     {
         Tree<Integer,Integer> ww = new Tree<Integer,Integer>();
         ww.insert(23);
-        ww.insert(1312132);
+        ww.insert(13);
         ww.insert(1231331);
         ww.insert(23121323);
         ww.displayTree();

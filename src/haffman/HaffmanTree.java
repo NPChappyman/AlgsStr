@@ -1,10 +1,11 @@
-package Tree;
+package haffman;
+
 import java.io.*;
 import java.util.*;
 import java.util.Comparator;
 class HaffmanTree implements Comparable<HaffmanTree>
 {
-    private Node<Integer,Character> root; // Единственное поле данных
+    private Node root; // Единственное поле данных
     public Node getroot()
     {
         return root;
@@ -19,20 +20,17 @@ class HaffmanTree implements Comparable<HaffmanTree>
     }
     public HaffmanTree()
     {
-
     }
     public static HaffmanTree sliv(HaffmanTree a1 , HaffmanTree a2)
     {
         HaffmanTree res = new HaffmanTree();
-        Node<Integer,Character> resNode = new Node();
+        Node resNode = new Node();
         resNode.iData = a1.root.iData+a2.root.iData;
         res.setroot(resNode);
         res.root.leftChild = a1.root;
         res.root.rightChild = a2.root;
-
         return  res;
     }
-
     @Override
     public int compareTo(HaffmanTree other) {
         return Integer.compare(this.root.iData, other.root.iData); // Сравнение по iData

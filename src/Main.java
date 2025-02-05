@@ -1,10 +1,6 @@
-import LinkedList.SortedList;
-import doublyLinked.DoubleLink;
-import doublyLinked.DoubleLinkedListIterator;
-import Tree.*;
+import haffman.Haffman;
+
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Main {
 

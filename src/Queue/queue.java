@@ -2,7 +2,7 @@ package Queue;
 
 public class queue<T> {
     private int maxSize;
-    private T[] queArray;
+    public T[] queArray;
     private int front;
     private int rear;
     private int nItems;
@@ -55,4 +55,11 @@ public void insert(T j) // Вставка элемента в конец оче�
     }
 //--------------------------------------------------------------
 
+    public static void main(String[] args)
+    {
+        queue<String> w  =  new queue<>(10);
+
+
+
+    }
 }
