@@ -7,29 +7,6 @@ import java.util.Stack;
 enum Color{
     RED,BLACK
 }
-class Node<T extends Comparable<T>,K>{
-    T key;
-    K value;
-    Node left=null;
-    Node right = null ;
-    Color color = Color.BLACK;
-    Node parent = null;
-    static Node nil= new Node();
-    public Node(T key , K value)
-    {
-        this.key = key;
-        this.value = value;
-        this.color =Color.RED;
-        this.left =  nil;
-        this.right = nil;
-        this.parent = nil;
-
-    }
-    public Node()
-    {
-
-    }
-}
 
 public class RedBlackTree<T extends Comparable<T>,K>
 {
@@ -56,7 +33,7 @@ public class RedBlackTree<T extends Comparable<T>,K>
         }
     }
 
-    void insert(T key, K value)
+    public void insert(T key, K value)
     {
         Node<T,K> currentNode = this.root;
         Node<T,K> parrent = Node.nil;
@@ -263,31 +240,175 @@ public class RedBlackTree<T extends Comparable<T>,K>
     }
 
 
+    void remove(T key) throws Exception {
+        Node<T, K> nodeToDelete = findNode(key);
+        if (nodeToDelete == Node.nil) {
+            System.out.println("Element with key " + key + " not found.");
+            return;
+        }
+
+        Node<T, K> y = nodeToDelete;
+        Node<T, K> x;
+        Color originalColor = y.color;
+
+        if (nodeToDelete.left == Node.nil) {
+            x = nodeToDelete.right;
+            transplant(nodeToDelete, nodeToDelete.right);
+        } else if (nodeToDelete.right == Node.nil) {
+            x = nodeToDelete.left;
+            transplant(nodeToDelete, nodeToDelete.left);
+        } else {
+            y = getMin(nodeToDelete.right);
+            originalColor = y.color;
+            x = y.right;
+
+            if (y.parent == nodeToDelete) {
+                x.parent = y;
+            } else {
+                transplant(y, y.right);
+                y.right = nodeToDelete.right;
+                y.right.parent = y;
+            }
+
+            transplant(nodeToDelete, y);
+            y.left = nodeToDelete.left;
+            y.left.parent = y;
+            y.color = nodeToDelete.color;
+        }
+
+        if (originalColor == Color.BLACK) {
+            fixAfterRemoval(x);
+        }
+    }
+
+    private Node<T, K> findNode(T key) {
+        Node<T, K> currentNode = this.root;
+        while (currentNode != Node.nil) {
+            int cmp = key.compareTo(currentNode.key);
+            if (cmp < 0) {
+                currentNode = currentNode.left;
+            } else if (cmp > 0) {
+                currentNode = currentNode.right;
+            } else {
+                return currentNode;
+            }
+        }
+        return Node.nil; // Если не найдено
+    }
+
+    private void transplant(Node<T, K> u, Node<T, K> v) {
+        if (u.parent == Node.nil) {
+            root = v;
+        } else if (u == u.parent.left) {
+            u.parent.left = v;
+        } else {
+            u.parent.right = v;
+        }
+        v.parent = u.parent;
+    }
+
+    private Node<T, K> getMin(Node<T, K> node) {
+        while (node.left != Node.nil) {
+            node = node.left;
+        }
+        return node;
+    }
+
+    private void fixAfterRemoval(Node<T, K> node) {
+        while (node != root && node.color == Color.BLACK) {
+            Node<T, K> sibling;
+            if (node == node.parent.left) {
+                sibling = node.parent.right;
+                if (sibling.color == Color.RED) {
+                    sibling.color = Color.BLACK;
+                    node.parent.color = Color.RED;
+                    rotateLeft(node.parent);
+                    sibling = node.parent.right;
+                }
+                if (sibling.left.color == Color.BLACK && sibling.right.color == Color.BLACK) {
+                    sibling.color = Color.RED;
+                    node = node.parent;
+                } else {
+                    if (sibling.right.color == Color.BLACK) {
+                        sibling.left.color = Color.BLACK;
+                        sibling.color = Color.RED;
+                        rotateRight(sibling);
+                        sibling = node.parent.right;
+                    }
+                    sibling.color = node.parent.color;
+                    node.parent.color = Color.BLACK;
+                    sibling.right.color = Color.BLACK;
+                    rotateLeft(node.parent);
+                    node = root;
+                }
+            } else {
+                sibling = node.parent.left;
+                if (sibling.color == Color.RED) {
+                    sibling.color = Color.BLACK;
+                    node.parent.color = Color.RED;
+                    rotateRight(node.parent);
+                    sibling = node.parent.left;
+                }
+                if (sibling.right.color == Color.BLACK && sibling.left.color == Color.BLACK) {
+                    sibling.color = Color.RED;
+                    node = node.parent;
+                } else {
+                    if (sibling.left.color == Color.BLACK) {
+                        sibling.right.color = Color.BLACK;
+                        sibling.color = Color.RED;
+                        rotateLeft(sibling);
+                        sibling = node.parent.left;
+                    }
+                    sibling.color = node.parent.color;
+                    node.parent.color = Color.BLACK;
+                    sibling.left.color = Color.BLACK;
+                    rotateRight(node.parent);
+                    node = root;
+                }
+            }
+        }
+        node.color = Color.BLACK;
+    }
+
+
+
     // Main function to test the Red-Black Tree implementation
     public static void main(String[] args) {
             RedBlackTree<Integer,Integer> tr1= new RedBlackTree<Integer,Integer>();
         tr1.insert(55,1);
+        try {
+
+            tr1.insert(75, 233);
+
+            tr1.insert(121, 1);
+            tr1.insert(112, 1);
+            tr1.insert(183, 1);
+            tr1.insert(323, 1);
+            tr1.insert(325, 1);
+            tr1.insert(326, 11);
+            tr1.insert(328, 1);
+            tr1.insert(329, 1);
+            tr1.insert(330, 1);
+            tr1.insert(331, 1);
+            tr1.insert(332, 1);
+            tr1.insert(333, 1);
+            tr1.insert(334, 1);
+            tr1.insert(336, 1);
+            tr1.insert(337, 1);
+            tr1.insert(338, 1);
 
 
-        tr1.insert(75,233);
+            tr1.displayTree();
 
-        tr1.insert(121,1);
-        tr1.insert(112,1);
-        tr1.insert(183,1);
-        tr1.insert(323,1);
-        tr1.insert(325,1);
-        tr1.insert(326,11);
-        tr1.insert(328,1);
-        tr1.insert(329,1);
-        tr1.insert(330,1);
-        tr1.insert(331,1);
-        tr1.insert(332,1);
-        tr1.insert(333,1);tr1.insert(334,1);tr1.insert(336,1);tr1.insert(337,1);
-        tr1.insert(338,1);
-        System.out.println(tr1.get(326));
+            tr1.remove(326);
+            tr1.displayTree();
+        }
+    catch (Exception e)
+    {
 
+        System.out.println(e.toString());
+    }
 
-    tr1.displayTree();
 
 
     }
