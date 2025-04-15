@@ -231,15 +231,9 @@ class AVL<T extends Comparable<T>> {
         w.add(1321);
         w.add(137);w.add(138);w.add(139);w.add(140);w.add(141);w.add(142);
         w.displayTree();
-        w.delete(137);
+        w.delete(140);w.delete(1321);w.delete(142);
         w.displayTree();
-        RedBlackTree<Integer,Integer> ww = new  RedBlackTree<Integer,Integer>();
-        ww.insert(1313,14);
-        ww.insert(1421,142);
-        ww.insert(142,142);
-        ww.insert(14,142);
-        ww.insert(121,142); ww.insert(41,142); ww.insert(141,142); ww.insert(1,142); ww.insert(12,142);
-        ww.displayTree();
+
     }
 }
 

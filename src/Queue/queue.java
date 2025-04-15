@@ -58,7 +58,8 @@ public void insert(T j) // Вставка элемента в конец оче�
     public static void main(String[] args)
     {
         queue<String> w  =  new queue<>(10);
-
+        w.insert("12");w.insert("8");
+        w.insert("7");
 
 
     }

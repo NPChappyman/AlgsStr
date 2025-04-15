@@ -1,5 +1,5 @@
 import haffman.Haffman;
-
+import yandex.*;
 import java.io.*;
 
 public class Main {
